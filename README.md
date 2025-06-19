@@ -36,7 +36,8 @@ You can access the live version of the application at [assignme.live](https://as
    ```
    git clone https://github.com/yourusername/assignme.git
    ```
-2. Navigate to the project directory:   ```
+2. Navigate to the project directory:
+   ```
    cd assignme
    ```
 
