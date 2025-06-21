@@ -7,7 +7,7 @@ const FormData = require('form-data');
 const url = "https://ff-test-cr3w.onrender.com/generate-font";
 
 // Path to the folder containing images
-const imageFolder = "images";
+const imageFolder = path.join(__dirname, "images");
 
 const spacing = 500;  // Define the spacing value you want to send
 

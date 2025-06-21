@@ -189,6 +189,97 @@ button:hover {
     background-color: #a238db;
 }
 
+/* Fullscreen Loader and Message Overlays */
+
+#fullscreen-loader {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.6);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+.loader-spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #B197FC;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.loader-text {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+#message-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.4);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#message-overlay .message-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 32px 36px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 1.3rem;
+    min-width: 320px;
+    max-width: 90vw;
+    position: relative;
+}
+#message-overlay.success .message-box {
+    border-left: 8px solid #51cf66;
+}
+#message-overlay.error .message-box {
+    border-left: 8px solid #ff6b6b;
+}
+#message-overlay .icon {
+    font-size: 2.2rem;
+    margin-right: 10px;
+}
+#message-overlay .msg {
+    flex: 1;
+    color: #222;
+}
+#message-overlay.success .icon {
+    color: #51cf66;
+}
+#message-overlay.error .icon {
+    color: #ff6b6b;
+}
+#message-overlay .close-btn {
+    background: transparent;
+    border: none;
+    color: #888;
+    font-size: 2rem;
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+#message-overlay .close-btn:hover {
+    color: #B197FC;
+}
+
 /* Media Queries for Responsiveness */
 
 @media (max-width: 768px) {

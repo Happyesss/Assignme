@@ -941,18 +941,21 @@ section{
     flex-wrap: wrap;
 }
 
-@media (max-width: 768px) {
-    .step-container {
-        flex-direction: column;
-    }
-    
-    .toc-section {
-        flex: 1 1 100%;
-    }
-    
-    .multi-image {
-        flex-direction: column;
-    }
+#fontInput + button,
+button[onclick="uploadFont()"] {
+    background-color: #B197FC !important;
+    color: #fff !important;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 22px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
 }
-
-
+#fontInput + button:hover,
+button[onclick="uploadFont()"]:hover {
+    background-color: #a238db !important;
+}

@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
     const video = document.getElementById('video');
     const flipButton = document.getElementById('flipButton');
@@ -77,28 +76,59 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // Loader and message overlay helpers
+    function showLoader() {
+        let loader = document.getElementById('fullscreen-loader');
+        if (!loader) {
+            loader = document.createElement('div');
+            loader.id = 'fullscreen-loader';
+            loader.innerHTML = `<div class="loader-spinner"></div><div class="loader-text">Uploading and generating font...</div>`;
+            document.body.appendChild(loader);
+        }
+        loader.style.display = 'flex';
+    }
+    function hideLoader() {
+        const loader = document.getElementById('fullscreen-loader');
+        if (loader) loader.style.display = 'none';
+    }
+    function showMessageOverlay(message, type = 'success') {
+        // Remove any existing overlay
+        const old = document.getElementById('message-overlay');
+        if (old) old.remove();
+        const overlay = document.createElement('div');
+        overlay.id = 'message-overlay';
+        overlay.className = type;
+        overlay.innerHTML = `
+            <div class="message-box">
+                <span class="icon">${type === 'success' ? '✔️' : '❌'}</span>
+                <span class="msg">${message}</span>
+                <button class="close-btn">&times;</button>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+        overlay.querySelector('.close-btn').onclick = () => overlay.remove();
+        if (type === 'success') setTimeout(() => overlay.remove(), 3500);
+    }
+
     uploadButton.addEventListener('click', async () => {
         if (images.length === 0) {
             alert('Please capture some images.');
             return;
         }
-
+        showLoader();
         const formData = new FormData();
         images.forEach((dataUrl, index) => {
             const blob = dataURItoBlob(dataUrl);
             formData.append('files', blob, `${index + 1}.png`);
         });
-
         formData.append('spacing', 500); // Example spacing value
-
         try {
             const response = await fetch('https://ff-test-cr3w.onrender.com/generate-font', {
                 method: 'POST',
                 body: formData
             });
-
             const data = await response.arrayBuffer();
-
+            hideLoader();
             if (response.ok) {
                 const blob = new Blob([data], { type: 'font/ttf' });
                 const url = window.URL.createObjectURL(blob);
@@ -109,18 +139,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.body.appendChild(a);
                 a.click();
                 window.URL.revokeObjectURL(url);
-                alert('Font generation successful!');
+                showMessageOverlay('Font generation successful! The TTF file has been downloaded.', 'success');
             } else {
-                console.log("Error:", await response.text());
+                const errorText = await response.text();
+                showMessageOverlay('Font generation failed: ' + errorText, 'error');
             }
         } catch (error) {
-            console.error('Error:', error);
-            alert('Font generation failed.');
+            hideLoader();
+            showMessageOverlay('Font generation failed: ' + error.message, 'error');
         }
-
         while (preview.firstChild) {
             preview.removeChild(preview.firstChild);
-        }        images = []; // Clear the in-memory array
+        }
+        images = [];
     });
 
     // Add null checks to prevent errors if elements don't exist
@@ -136,34 +167,25 @@ document.addEventListener("DOMContentLoaded", () => {
         fileInput.addEventListener('change', () => {
             const files = fileInput.files;
             if (files.length === 0) {
-                alert('Please select an image file.');
+                alert('Please select image files.');
                 return;
             }
-
-            const formData = new FormData();
-            formData.append('files', files[0]);
-
-            fetch('https://ff-test-cr3w.onrender.com/generate-font', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.arrayBuffer())
-            .then(data => {
-                const blob = new Blob([data], { type: 'font/ttf' });
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.style.display = 'none';
-                a.href = url;
-                a.download = 'generated_font.ttf';
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                alert('Font generation successful!');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Font generation failed.');
+            // Read each file as data URL and add to preview and images array
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const dataUrl = e.target.result;
+                    // Add to images array
+                    images.push(dataUrl);
+                    // Show in preview
+                    const img = document.createElement('img');
+                    img.src = dataUrl;
+                    preview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
             });
+            // Clear the file input so the same file(s) can be selected again if needed
+            fileInput.value = '';
         });
     }
 
