@@ -148,7 +148,9 @@ assignme/
 
 ## 🔄 API Integration
 
-The application integrates with a backend API to process assignment files and convert them to handwritten text:
+The application integrates with a backend API to process assignment files and convert them to handwritten text.
+
+> **Note:** The provided API endpoints are for testing and demonstration purposes only. They are not intended for production use.
 
 ```javascript
 const url = "https://test2-sfwm.onrender.com/process-file/";
