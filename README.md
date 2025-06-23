@@ -27,6 +27,16 @@ This project is open source and released under the [MIT License](./LICENSE). You
 - Follow guidelines for best results
 - Use your custom font in the handwriting generator
 
+### 3. AI-Powered Q&A System
+- Intelligent question processing using Google Gemini AI
+- Contextual understanding of assignment questions
+- Enhanced text extraction and processing capabilities
+
+### 4. Advanced Font Processing Backend
+- Server-side FontForge integration for professional font generation
+- Dockerized backend service for scalable font processing
+- High-quality font rendering and optimization
+
 ## 🚀 Getting Started
 
 You can access the live version of the application at [assignme.live](https://assignme.live) or set up a local development environment following the instructions below.
@@ -34,6 +44,8 @@ You can access the live version of the application at [assignme.live](https://as
 ### Prerequisites
 - Modern web browser (Chrome, Firefox, Edge recommended)
 - Internet connection
+- For backend services: Docker (optional)
+- Python 3.8+ (for AI services)
 
 ### Installation
 1. Clone the repository:
@@ -58,7 +70,45 @@ For local development, you can use a simple HTTP server:
    # Right-click on index.html and select "Open with Live Server"
    ```
 
-**Note:** While this is a static web application that runs in the browser, the dependencies are needed for API integration and some server-side utilities.
+### Backend Services Setup (Optional)
+
+#### FontForge Backend Service
+For advanced font processing capabilities:
+
+1. Navigate to the fontforge backend directory:
+   ```
+   cd fontforge_backend
+   ```
+
+2. Build and run with Docker:
+   ```
+   docker build -t assignme-fontforge .
+   docker run -p 5000:5000 assignme-fontforge
+   ```
+
+3. The FontForge backend will be available at `http://localhost:5000`
+
+#### Gemini Q&A Service
+For AI-powered question processing:
+
+1. Navigate to the Q&A directory:
+   ```
+   cd "q&a gemini"
+   ```
+
+2. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+
+3. Set up your Google Gemini API key in environment variables
+
+4. Run the service:
+   ```
+   python main.py
+   ```
+
+**Note:** While this is a static web application that runs in the browser, the backend services provide enhanced functionality for font generation and AI processing.
 
 5. You're ready to go! The application will automatically use the correct configuration based on your environment.
 
@@ -132,6 +182,16 @@ assignme/
 │   ├── scripts.js        # Capture functionality
 │   └── style.css         # Capture page styles
 │
+├── fontforge_backend/    # FontForge backend service
+│   ├── app.py            # Flask application for font processing
+│   ├── Dockerfile        # Docker configuration for containerization
+│   └── requirements.txt  # Python dependencies (inferred)
+│
+├── q&a gemini/           # AI-powered Q&A service
+│   ├── main.py           # Main application script for Gemini integration
+│   ├── requirements.txt  # Python dependencies for AI service
+│   └── config/           # Configuration files (inferred)
+│
 ├── image/                # Website images
 │   ├── logo.png          # Site logo
 │   ├── icon.png          # Favicon
@@ -144,14 +204,29 @@ assignme/
     └── images/           # Sample images for font generation
 ```
 
-**Note**: This is a static web application that runs directly in the browser without requiring a build process or server setup.
+## 🏗️ Architecture Overview
+
+### Frontend Components
+- **Main Application**: Static HTML/CSS/JS application running in browser
+- **Canvas Page**: Interactive handwriting generation interface
+- **Capture Interface**: Handwriting sample collection system
+
+### Backend Services
+- **FontForge Backend**: Dockerized Python service using FontForge for professional font generation
+- **Gemini Q&A Service**: AI-powered question processing using Google's Gemini API
+- **File Processing API**: Handles document upload and text extraction
+
+### Key Features
+- **Client-Side Processing**: Most functionality runs directly in the browser
+- **Scalable Backend**: Optional backend services for enhanced capabilities
+- **AI Integration**: Gemini AI for intelligent question understanding
+- **Professional Font Generation**: FontForge integration for high-quality custom fonts
 
 ## 🔄 API Integration
 
-The application integrates with a backend API to process assignment files and convert them to handwritten text.
+The application integrates with multiple backend services:
 
-> **Note:** The provided API endpoints are for testing and demonstration purposes only. They are not intended for production use.
-
+### Main File Processing API
 ```javascript
 const url = "https://test2-sfwm.onrender.com/process-file/";
 
@@ -172,6 +247,90 @@ function uploadFile() {
 }
 ```
 
+### FontForge Backend API
+```javascript
+// Font generation endpoint
+const fontForgeUrl = "http://localhost:5000/generate-font/";
+
+// Custom font processing
+function processHandwritingFont(samples) {
+  // Send handwriting samples to FontForge backend
+  // Returns processed font file
+}
+```
+
+### Gemini Q&A API
+```javascript
+// AI question processing
+const geminiUrl = "http://localhost:8000/process-question/";
+
+// Intelligent question analysis
+function analyzeQuestion(questionText, subject) {
+  // Leverages Gemini AI for enhanced understanding
+  // Returns structured question data
+}
+```
+
+> **Note:** The provided API endpoints are for testing and demonstration purposes only. They are not intended for production use.
+
+## 🐳 Docker Deployment
+
+### FontForge Backend
+```bash
+# Build the FontForge service
+cd fontforge_backend
+docker build -t assignme-fontforge .
+
+# Run the service
+docker run -d -p 5000:5000 --name fontforge-service assignme-fontforge
+```
+
+### Complete Stack with Docker Compose
+```yaml
+version: '3.8'
+services:
+  fontforge-backend:
+    build: ./fontforge_backend
+    ports:
+      - "5000:5000"
+    
+  gemini-qa:
+    build: ./q&a\ gemini
+    ports:
+      - "8000:8000"
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+```
+
+## 🤖 AI Features
+
+### Gemini Integration
+The Q&A Gemini service provides:
+- **Question Understanding**: Context-aware processing of assignment questions
+- **Subject Recognition**: Automatic subject classification and relevant processing
+- **Content Enhancement**: Improved text extraction from images and PDFs
+- **Language Support**: Multi-language question processing capabilities
+
+### Setup Requirements
+1. Google Gemini API key
+2. Python 3.8+
+3. Required dependencies (see `q&a gemini/requirements.txt`)
+
+## 🛠️ Advanced Font Processing
+
+### FontForge Backend Features
+- **Professional Font Generation**: Uses FontForge library for industry-standard font creation
+- **Batch Processing**: Handle multiple handwriting samples simultaneously
+- **Font Optimization**: Automatic kerning and spacing adjustments
+- **Format Support**: Generate TTF, OTF, and WOFF font formats
+- **Dockerized Deployment**: Easy scaling and deployment
+
+### Font Generation Process
+1. **Sample Collection**: Capture handwriting samples through web interface
+2. **Backend Processing**: Send samples to FontForge backend service
+3. **Font Generation**: Create professional-quality font files
+4. **Integration**: Use generated fonts in the main application
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -181,6 +340,12 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+### Development Areas
+- **Frontend Enhancements**: Improve UI/UX and add new features
+- **Backend Services**: Enhance AI processing and font generation
+- **API Integration**: Develop new backend service integrations
+- **Documentation**: Improve guides and examples
 
 ## 📝 License
 
@@ -192,6 +357,9 @@ This project is available under the MIT License. See the LICENSE file for more i
 - Fonts used in this project are either created by the team or sourced from open-source font repositories
 - HTML2Canvas for converting HTML to images
 - jsPDF for PDF generation
+- **FontForge**: Open-source font editor for professional font generation
+- **Google Gemini**: AI-powered question processing and understanding
+- **Docker**: Containerization for scalable backend services
 
 ## 📧 Contact
 
