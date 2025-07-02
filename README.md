@@ -37,6 +37,12 @@ This project is open source and released under the [MIT License](./LICENSE). You
 - Dockerized backend service for scalable font processing
 - High-quality font rendering and optimization
 
+## 🖼️ System Architecture
+
+![System Architecture](image/Systemdesign.jpeg)
+
+This was early prototype system architecture that laid the solid foundation for the platform. Load balancing and bottleneck handling architecture designs are not included in this diagram, as they were implemented during the hosting phase.
+
 ## 🚀 Getting Started
 
 You can access the live version of the application at [assignme.live](https://assignme.live) or set up a local development environment following the instructions below.
@@ -143,12 +149,6 @@ For AI-powered question processing:
 - **Effects**: Apply shadow, scanner, or no effect
 - **Custom Paper Background**: Upload your own paper texture or background image
 - **Pen Color**: Choose between blue, black, red, or green ink
-
-## 🖼️ System Architecture
-
-![System Architecture](image/Systemdesign.jpeg)
-
-This was early prototype system architecture that laid the solid foundation for the platform. Load balancing and bottleneck handling architecture designs are not included in this diagram, as they were implemented during the hosting phase.
 
 ## 📂 Project Structure
 
@@ -321,21 +321,6 @@ The Q&A Gemini service provides:
 1. Google Gemini API key
 2. Python 3.8+
 3. Required dependencies (see `q&a gemini/requirements.txt`)
-
-## 🛠️ Advanced Font Processing
-
-### FontForge Backend Features
-- **Professional Font Generation**: Uses FontForge library for industry-standard font creation
-- **Batch Processing**: Handle multiple handwriting samples simultaneously
-- **Font Optimization**: Automatic kerning and spacing adjustments
-- **Format Support**: Generate TTF, OTF, and WOFF font formats
-- **Dockerized Deployment**: Easy scaling and deployment
-
-### Font Generation Process
-1. **Sample Collection**: Capture handwriting samples through web interface
-2. **Backend Processing**: Send samples to FontForge backend service
-3. **Font Generation**: Create professional-quality font files
-4. **Integration**: Use generated fonts in the main application
 
 ## 🤝 Contributing
 
