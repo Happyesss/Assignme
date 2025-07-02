@@ -358,4 +358,4 @@ For feedback or questions, please use the [contact form](https://assignme.live/c
 
 ---
 
-© 2024 [assignme.live](https://assignme.live) | All Rights Reserved.
+© 2025 [assignme.live](https://assignme.live) | All Rights Reserved.
