@@ -94,6 +94,12 @@ For local development, you can use a simple HTTP server:
 - **Custom Paper Background**: Upload your own paper texture or background image
 - **Pen Color**: Choose between blue, black, red, or green ink
 
+## 🖼️ System Architecture
+
+![System Architecture](image/Systemdesign.jpeg)
+
+This was early prototype system architecture that laid the solid foundation for the platform. Load balancing and bottleneck handling architecture designs are not included in this diagram, as they were implemented during the hosting phase.
+
 ## 📂 Project Structure
 
 ```
@@ -199,4 +205,4 @@ For feedback or questions, please use the [contact form](https://assignme.live/c
 
 ---
 
-© 2024 [assignme.live](https://assignme.live) | All Rights Reserved.
+© 2025 [assignme.live](https://assignme.live) | All Rights Reserved.
